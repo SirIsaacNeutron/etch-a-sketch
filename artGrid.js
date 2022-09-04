@@ -69,6 +69,14 @@ function handleClear(e) {
 let clearButton = document.querySelector('.clear-button')
 clearButton.addEventListener('click', handleClear)
 
+let gridButton = document.querySelector('.grid-button')
+gridButton.addEventListener('click', e => {
+    let gridCols = document.querySelectorAll('.grid-col')
+    gridCols.forEach(gridCol => {
+        gridCol.classList.toggle('grid-lines')
+    })
+})
+
 let sizeSlider = document.getElementById('size-slider')
 sizeSlider.oninput = () => {
     size = sizeSlider.value
