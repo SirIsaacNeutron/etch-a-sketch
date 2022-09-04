@@ -1,11 +1,22 @@
 let size = 16
-
 let color = '#000000'
+
+const MODES = {
+    'DRAW': 'DRAW',
+    'ERASE': 'ERASE'
+}
+
+let currentMode = MODES.DRAW
 
 let grid = document.querySelector('div.grid')
 
 function changeColor(e) {
-    this.style.backgroundColor = color
+    if (currentMode === MODES.ERASE) {
+        this.style.backgroundColor = '#ffffff'
+    }
+    else {
+        this.style.backgroundColor = color
+    }
 }
 
 for (let i = 0; i < size; ++i) {
@@ -28,4 +39,11 @@ let colorInput = document.querySelector('.color-input')
 
 colorInput.addEventListener('input', e => {
     color = colorInput.value
+})
+
+let eraserButton = document.querySelector('.eraser-button')
+eraserButton.addEventListener('click', e => {
+    eraserButton.classList.toggle('selected')
+    
+    currentMode = currentMode === MODES.ERASE ? MODES.DRAW : MODES.ERASE 
 })
