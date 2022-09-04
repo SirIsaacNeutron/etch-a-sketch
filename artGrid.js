@@ -8,8 +8,6 @@ const MODES = {
 
 let currentMode = MODES.DRAW
 
-let grid = document.querySelector('div.grid')
-
 function changeColor(e) {
     if (currentMode === MODES.ERASE) {
         this.style.backgroundColor = '#ffffff'
@@ -19,21 +17,34 @@ function changeColor(e) {
     }
 }
 
-for (let i = 0; i < size; ++i) {
-    const newRow = document.createElement('div')
-    newRow.classList.add('grid-row')
-    newRow.classList.add(`row-${i}`)
-    for (let j = 0; j < size; ++j) {
-        const newCol = document.createElement('div')
-        newCol.classList.add('grid-col')
-        newCol.classList.add(`col-${i}-${j}`)
-    
-        newCol.addEventListener('click', changeColor)
+function createGrid() {
+    // We need to delete the old grid (if there is one) before creating the new one
+    let oldCols = document.querySelectorAll('.grid-col')
+    oldCols.forEach(col => col.remove())
 
-        newRow.appendChild(newCol)
+    let oldRows = document.querySelectorAll('.grid-row')
+    oldRows.forEach(row => row.remove())
+
+    let grid = document.querySelector('div.grid')
+
+    for (let i = 0; i < size; ++i) {
+        const newRow = document.createElement('div')
+        newRow.classList.add('grid-row')
+        newRow.classList.add(`row-${i}`)
+        for (let j = 0; j < size; ++j) {
+            const newCol = document.createElement('div')
+            newCol.classList.add('grid-col')
+            newCol.classList.add(`col-${i}-${j}`)
+        
+            newCol.addEventListener('click', changeColor)
+
+            newRow.appendChild(newCol)
+        }
+        grid.appendChild(newRow)
     }
-    grid.appendChild(newRow)
 }
+
+createGrid()
 
 let colorInput = document.querySelector('.color-input')
 
@@ -57,3 +68,20 @@ function handleClear(e) {
 
 let clearButton = document.querySelector('.clear-button')
 clearButton.addEventListener('click', handleClear)
+
+let sizeSlider = document.getElementById('size-slider')
+sizeSlider.oninput = () => {
+    size = sizeSlider.value
+    changeSliderText()
+}
+
+function changeSliderText() {
+    let sliderText = document.querySelector('.slider-text')
+    sliderText.innerText = `${size} x ${size}`
+}
+
+// We only want to create the grid when the user lets go of the slider input, not
+// while they're still adjusting it
+sizeSlider.addEventListener('mouseup', e => {
+    createGrid()
+})
