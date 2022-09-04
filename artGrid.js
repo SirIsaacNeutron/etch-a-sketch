@@ -47,3 +47,13 @@ eraserButton.addEventListener('click', e => {
     
     currentMode = currentMode === MODES.ERASE ? MODES.DRAW : MODES.ERASE 
 })
+
+function handleClear(e) {
+    let gridCols = document.querySelectorAll('.grid-col')
+    gridCols.forEach(gridCol => {
+        gridCol.style.backgroundColor = '#ffffff'
+    })
+}
+
+let clearButton = document.querySelector('.clear-button')
+clearButton.addEventListener('click', handleClear)
