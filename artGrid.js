@@ -1,14 +1,29 @@
 let size = 16
 let color = '#000000'
+let isMouseDown = false
 
 const MODES = {
     'DRAW': 'DRAW',
     'ERASE': 'ERASE'
 }
 
+// We need the isMouseDown global variable because elements
+// can only detect mousedown events over themselves alone
+// If I held my mouse down over one grid-col, the other grid-cols wouldn't detect that
+// I was holding my mouse down!
+// However, they can detect whether my mouse is over them...
+document.body.addEventListener('mousedown', e => {
+    isMouseDown = true
+})
+
+document.body.addEventListener('mouseup', e => {
+    isMouseDown = false
+})
+
 let currentMode = MODES.DRAW
 
 function changeColor(e) {
+    if (e.type === 'mouseover' && !isMouseDown) { return }
     if (currentMode === MODES.ERASE) {
         this.style.backgroundColor = '#ffffff'
     }
@@ -36,7 +51,8 @@ function createGrid() {
             newCol.classList.add('grid-col')
             newCol.classList.add(`col-${i}-${j}`)
         
-            newCol.addEventListener('click', changeColor)
+            newCol.addEventListener('mouseover', changeColor)
+            newCol.addEventListener('mousedown', changeColor)
 
             newRow.appendChild(newCol)
         }
