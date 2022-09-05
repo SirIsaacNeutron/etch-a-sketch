@@ -1,5 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400&display=swap');
+
+body {
+    font-family: 'Quicksand', sans-serif;
+    background-color: #d4fff1;
+}
+
+button {
+    font-family: inherit;
+}
+
 h1 {
     text-align: center;
+    font-size: 3rem;
 }
 
 .controls {
@@ -25,15 +37,28 @@ h1 {
     height: 50px;
 }
 
+.color-input {
+    height: 100px;
+    width: 100px;
+}
+
 .slider-area {
     display: flex;
 
     flex-direction: column;
 
     align-items: center;
+    margin-top: 20px;
+}
+
+.slider-text {
+    font-size: 2rem;
+    margin: 0;
+    margin-bottom: 5px;
 }
 
 .grid {
+    background-color: white;
     height: 500px;
     width: 500px;
 
