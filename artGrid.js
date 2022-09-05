@@ -90,6 +90,4 @@ function changeSliderText() {
 
 // We only want to create the grid when the user lets go of the slider input, not
 // while they're still adjusting it
-sizeSlider.addEventListener('mouseup', e => {
-    createGrid()
-})
+sizeSlider.onchange = e => createGrid()
