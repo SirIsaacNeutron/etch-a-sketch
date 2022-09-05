@@ -91,3 +91,8 @@ h1 {
 .grid-lines {
     border: 1px solid gray;
 }
+
+footer {
+    text-align: center;
+    margin-top: 15px;
+}
