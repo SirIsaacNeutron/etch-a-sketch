@@ -2,9 +2,12 @@ let size = 16
 let color = '#000000'
 let isMouseDown = false
 
+const HEX_DIGITS = '0123456789abcdef'
+
 const MODES = {
     'DRAW': 'DRAW',
-    'ERASE': 'ERASE'
+    'ERASE': 'ERASE',
+    'RAINBOW': 'RAINBOW'
 }
 
 // We need the isMouseDown global variable because elements
@@ -22,10 +25,24 @@ document.body.addEventListener('mouseup', e => {
 
 let currentMode = MODES.DRAW
 
+function getRandomColor() {
+    let hexColor = '#'
+    for (let i = 0; i < 6; ++i) {
+        const randomIndex = Math.floor(Math.random() * HEX_DIGITS.length)
+        let randomHexDigit = HEX_DIGITS.charAt(randomIndex)
+        hexColor += randomHexDigit
+    }
+    return hexColor
+}
+
 function changeColor(e) {
     if (e.type === 'mouseover' && !isMouseDown) { return }
     if (currentMode === MODES.ERASE) {
         this.style.backgroundColor = '#ffffff'
+    }
+    else if (currentMode === MODES.RAINBOW) {
+        const randomColor = getRandomColor()
+        this.style.backgroundColor = randomColor
     }
     else {
         this.style.backgroundColor = color
@@ -71,8 +88,17 @@ colorInput.addEventListener('input', e => {
 let eraserButton = document.querySelector('.eraser-button')
 eraserButton.addEventListener('click', e => {
     eraserButton.classList.toggle('selected')
+    rainbowButton.classList.remove('selected')
     
     currentMode = currentMode === MODES.ERASE ? MODES.DRAW : MODES.ERASE 
+})
+
+let rainbowButton = document.querySelector('.rainbow-button')
+rainbowButton.addEventListener('click', e => {
+    rainbowButton.classList.toggle('selected')
+    eraserButton.classList.remove('selected')
+
+    currentMode = currentMode === MODES.RAINBOW ? MODES.DRAW : MODES.RAINBOW
 })
 
 function handleClear(e) {
